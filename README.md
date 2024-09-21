@@ -55,3 +55,4 @@ Contents
 * Part 5: [Corner Cases](docs/part_5_corner_cases.md)
 * Part 6: [Conclusion](docs/part_6_conclusion.md)
 * Part 7: [Optional Challenge Assignment](docs/part_7_optional_challenge.md)
+# fa24-matt-hamilton-chips3-7
