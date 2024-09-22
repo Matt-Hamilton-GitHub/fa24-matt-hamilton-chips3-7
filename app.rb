@@ -49,7 +49,7 @@ class WordGuesserApp < Sinatra::Base
     erb :show
   end
 
-  get '/create' do
+  post '/create' do
     # NOTE: don't change next line - it's needed by autograder!
     word = params[:word] || WordGuesserGame.get_random_word
     # NOTE: don't change previous line - it's needed by autograder!
