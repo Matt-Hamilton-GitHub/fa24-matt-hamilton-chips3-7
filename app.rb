@@ -97,6 +97,4 @@ class WordGuesserApp < Sinatra::Base
   # wrong_guesses and word_with_guesses from @game.
 
   
- 
-  
 end
