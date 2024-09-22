@@ -22,15 +22,40 @@ class WordGuesserApp < Sinatra::Base
   end
   
   get '/new' do
-    erb :new
+    redirect '/create'
   end
-  
-  post '/create' do
+
+  post '/new' do
+    redirect '/create'
+  end
+
+  get '/win' do
+    if @game.win == true
+      erb :win
+    else
+      redirect '/show'
+    end
+  end
+
+  get '/lose' do
+    if @game.lose == true
+      erb :lose
+    else
+      redirect '/show'
+    end
+  end
+
+  get '/show' do
+    erb :show
+  end
+
+  get '/create' do
     # NOTE: don't change next line - it's needed by autograder!
     word = params[:word] || WordGuesserGame.get_random_word
     # NOTE: don't change previous line - it's needed by autograder!
 
     @game = WordGuesserGame.new(word)
+
     redirect '/show'
   end
   
@@ -40,7 +65,28 @@ class WordGuesserApp < Sinatra::Base
   post '/guess' do
     letter = params[:guess].to_s[0]
     ### YOUR CODE HERE ###
-    redirect '/show'
+
+
+    if letter.nil? || letter.empty? || !letter.match?(/[A-Za-z]/)
+      flash[:message] = "Invalid guess."
+    else
+      result = @game.guess(letter)
+  
+      if !result
+        flash[:message] = "You have already used that letter."
+      elsif !letter.match?(/[A-Za-z]/)
+        flash[:message] = "Invalid guess."
+      end
+    end
+
+    @game.check_win_or_lose
+    if @game.lose == true
+      redirect '/lose'
+    elsif @game.win == true
+      redirect '/win'
+    else
+      redirect '/show'
+    end
   end
   
   # Everytime a guess is made, we should eventually end up at this route.
@@ -48,19 +94,8 @@ class WordGuesserApp < Sinatra::Base
   # won, lost, or neither, and take the appropriate action.
   # Notice that the show.erb template expects to use the instance variables
   # wrong_guesses and word_with_guesses from @game.
-  get '/show' do
-    ### YOUR CODE HERE ###
-    erb :show # You may change/remove this line
-  end
+
   
-  get '/win' do
-    ### YOUR CODE HERE ###
-    erb :win # You may change/remove this line
-  end
-  
-  get '/lose' do
-    ### YOUR CODE HERE ###
-    erb :lose # You may change/remove this line
-  end
+ 
   
 end
