@@ -22,7 +22,7 @@ class WordGuesserApp < Sinatra::Base
   end
   
   get '/new' do
-    redirect '/create'
+    erb :new
   end
 
   get '/win' do
