@@ -21,7 +21,7 @@ class WordGuesserApp < Sinatra::Base
     erb :new
   end
   
-  post '/new' do
+  get '/new' do
     redirect '/create'
   end
 
@@ -45,8 +45,12 @@ class WordGuesserApp < Sinatra::Base
     erb :show
   end
 
-
   get '/create' do
+    redirect '/new'
+  end
+
+
+  post '/create' do
     # NOTE: don't change next line - it's needed by autograder!
     word = params[:word] || WordGuesserGame.get_random_word
     # NOTE: don't change previous line - it's needed by autograder!
